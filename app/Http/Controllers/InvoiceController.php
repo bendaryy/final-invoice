@@ -132,7 +132,7 @@ class InvoiceController extends Controller
 
 
 
-        $response = Http::asForm()->post('https://id.preprod.eta.gov.eg/connect/token', [
+        $response = Http::asForm()->post('https://id.eta.gov.eg/connect/token', [
             'grant_type' => 'client_credentials',
             'client_id' => auth()->user()->details->client_id,
             'client_secret' => auth()->user()->details->client_secret,
@@ -142,7 +142,7 @@ class InvoiceController extends Controller
         $invoice =   Http::withHeaders([
             "Authorization" => 'Bearer ' . $response['access_token'],
             "Content-Type" => "application/json"
-        ])->withBody($fullSignedFile, "application/json")->post('https://api.preprod.invoicing.eta.gov.eg/api/v1/documentsubmissions');
+        ])->withBody($fullSignedFile, "application/json")->post('https://api.invoicing.eta.gov.eg/api/v1/documentsubmissions');
 
 
         if ($invoice['submissionId'] == !null) {
@@ -168,7 +168,7 @@ class InvoiceController extends Controller
     public function getData()
     {
 
-        $response = Http::asForm()->post('https://id.preprod.eta.gov.eg/connect/token', [
+        $response = Http::asForm()->post('https://id.eta.gov.eg/connect/token', [
             'grant_type' => 'client_credentials',
             'client_id' => auth()->user()->details->client_id,
             'client_secret' => auth()->user()->details->client_secret,
@@ -177,7 +177,7 @@ class InvoiceController extends Controller
 
         $getData = Http::withHeaders([
             "Authorization" => 'Bearer ' . $response['access_token'],
-        ])->get("https://api.preprod.invoicing.eta.gov.eg/api/v1/documents/" . "F80PMKPW00MQZNGD135ANX9F10" . "/details");
+        ])->get("https://api.invoicing.eta.gov.eg/api/v1/documents/" . "F80PMKPW00MQZNGD135ANX9F10" . "/details");
         // $publicUrl = $getData['publicUrl'];
         // return redirect($publicUrl);
         return $getData->getBody();
@@ -186,7 +186,7 @@ class InvoiceController extends Controller
 
     public function showInvoices()
     {
-        $response = Http::asForm()->post('https://id.preprod.eta.gov.eg/connect/token', [
+        $response = Http::asForm()->post('https://id.eta.gov.eg/connect/token', [
             'grant_type' => 'client_credentials',
             'client_id' => auth()->user()->details->client_id,
             'client_secret' => auth()->user()->details->client_secret,
@@ -195,7 +195,7 @@ class InvoiceController extends Controller
 
         $showInvoices = Http::withHeaders([
             "Authorization" => 'Bearer ' . $response['access_token'],
-        ])->get('https://api.preprod.invoicing.eta.gov.eg/api/v1.0/documents/recent?pageSize=2000000000');
+        ])->get('https://api.invoicing.eta.gov.eg/api/v1.0/documents/recent?pageSize=2000000000');
 
 
 
@@ -207,7 +207,7 @@ class InvoiceController extends Controller
     }
     public function showInvoices2()
     {
-        $response = Http::asForm()->post('https://id.preprod.eta.gov.eg/connect/token', [
+        $response = Http::asForm()->post('https://id.eta.gov.eg/connect/token', [
             'grant_type' => 'client_credentials',
             'client_id' => auth()->user()->details->client_id,
             'client_secret' => auth()->user()->details->client_secret,
@@ -216,7 +216,7 @@ class InvoiceController extends Controller
 
         $showInvoices = Http::withHeaders([
             "Authorization" => 'Bearer ' . $response['access_token'],
-        ])->get('https://api.preprod.invoicing.eta.gov.eg/api/v1.0/documents/recent?pageSize=2000000000');
+        ])->get('https://api.invoicing.eta.gov.eg/api/v1.0/documents/recent?pageSize=2000000000');
 
 
 
@@ -229,7 +229,7 @@ class InvoiceController extends Controller
 
     public function showPdfInvoice($uuid)
     {
-        $response = Http::asForm()->post('https://id.preprod.eta.gov.eg/connect/token', [
+        $response = Http::asForm()->post('https://id.eta.gov.eg/connect/token', [
             'grant_type' => 'client_credentials',
             'client_id' => auth()->user()->details->client_id,
             'client_secret' => auth()->user()->details->client_secret,
@@ -240,7 +240,7 @@ class InvoiceController extends Controller
         $showPdf = Http::withHeaders([
             "Authorization" => 'Bearer ' . $response['access_token'],
             "Accept-Language" => 'ar'
-        ])->get("https://api.preprod.invoicing.eta.gov.eg/api/v1/documents/" . $uuid . "/pdf");
+        ])->get("https://api.invoicing.eta.gov.eg/api/v1/documents/" . $uuid . "/pdf");
 
         return  response($showPdf)->header('Content-Type', 'application/pdf');
     }
@@ -252,7 +252,7 @@ class InvoiceController extends Controller
 
     public function cancelDocument($uuid)
     {
-        $response = Http::asForm()->post('https://id.preprod.eta.gov.eg/connect/token', [
+        $response = Http::asForm()->post('https://id.eta.gov.eg/connect/token', [
             'grant_type' => 'client_credentials',
             'client_id' => auth()->user()->details->client_id,
             'client_secret' => auth()->user()->details->client_secret,
@@ -262,7 +262,7 @@ class InvoiceController extends Controller
         $cancel = Http::withHeaders([
             "Authorization" => 'Bearer ' . $response['access_token'],
         ])->put(
-            'https://api.preprod.invoicing.eta.gov.eg/api/v1.0/documents/state/' . $uuid . '/state',
+            'https://api.invoicing.eta.gov.eg/api/v1.0/documents/state/' . $uuid . '/state',
             array(
                 "status" => "cancelled",
                 "reason" => "يوجد خطأ بالفاتورة"
@@ -278,7 +278,7 @@ class InvoiceController extends Controller
 
     public function RejectDocument($uuid)
     {
-        $response = Http::asForm()->post('https://id.preprod.eta.gov.eg/connect/token', [
+        $response = Http::asForm()->post('https://id.eta.gov.eg/connect/token', [
             'grant_type' => 'client_credentials',
             'client_id' => auth()->user()->details->client_id,
             'client_secret' => auth()->user()->details->client_secret,
@@ -288,7 +288,7 @@ class InvoiceController extends Controller
         $cancel = Http::withHeaders([
             "Authorization" => 'Bearer ' . $response['access_token'],
         ])->put(
-            'https://api.preprod.invoicing.eta.gov.eg/api/v1.0/documents/state/' . $uuid . '/state',
+            'https://api.invoicing.eta.gov.eg/api/v1.0/documents/state/' . $uuid . '/state',
             array(
                 "status" => "rejected",
                 "reason" => "يوجد خطأ بالفاتورة"
