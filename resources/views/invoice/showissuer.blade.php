@@ -64,8 +64,7 @@
 
 
 @section('page')
-الفواتيرالتى تم ارسالها من المكتب الى الشركات
-@endsection
+الفواتيرالتى تم ارسالها من {{ auth()->user()->details->company_name }} الى الشركات@endsection
 
 
 

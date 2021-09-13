@@ -3,6 +3,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/EInvoicing
 .env
 .env.backup
 .phpunit.result.cache

@@ -17,6 +17,8 @@ class CreateDetailsTable extends Migration
             $table->id();
             $table->string('client_id');
             $table->string('client_secret');
+            $table->string('company_name');
+            $table->string('company_id');
             $table->string('governate');
             $table->string('regionCity');
             $table->string('street');

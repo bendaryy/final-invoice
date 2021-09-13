@@ -19,16 +19,15 @@ class InvoiceController extends Controller
                     "address" => array(
                         "branchID" => "0",
                         "country" => "EG",
-                        "governate"
-                        => auth()->user()->details->governate,
+                        "governate" => auth()->user()->details->governate,
 
                         "regionCity" => auth()->user()->details->regionCity,
                         "street" => auth()->user()->details->street,
                         "buildingNumber" => auth()->user()->details->buildingNumber
                     ),
                     "type" => auth()->user()->details->issuerType,
-                    "id" => "410973742",
-                    "name" => "fouad el watan"
+                    "id" => auth()->user()->details->company_id,
+                    "name" => auth()->user()->details->company_name,
                 ),
                 "receiver" => array(
                     "address" => array(
@@ -110,7 +109,7 @@ class InvoiceController extends Controller
             ];
 
         $trnsformed = json_encode($invoice, JSON_UNESCAPED_UNICODE);
-        $myFileToJson = fopen("D:\EInvoicing\SourceDocumentJson.json", "w") or die("unable to open file");
+        $myFileToJson = fopen("C:\laragon\www\live\EInvoicing\SourceDocumentJson.json", "w") or die("unable to open file");
         fwrite($myFileToJson, $trnsformed);
 
 
@@ -120,12 +119,12 @@ class InvoiceController extends Controller
     {
 
 
-        shell_exec('D:\EInvoicing\SubmitInvoices2.bat');
+        shell_exec('C:\laragon\www\live\EInvoicing\SubmitInvoices2.bat');
 
-        $path = "D:\EInvoicing\FullSignedDocument.json";
-        $path2 = "D:\EInvoicing\Cades.txt";
-        $path3 = "D:\EInvoicing\CanonicalString.txt";
-        $path4 = "D:\EInvoicing\SourceDocumentJson.json";
+        $path = "C:\laragon\www\live\EInvoicing\FullSignedDocument.json";
+        $path2 = "C:\laragon\www\live\EInvoicing\Cades.txt";
+        $path3 = "C:\laragon\www\live\EInvoicing\CanonicalString.txt";
+        $path4 = "C:\laragon\www\live\EInvoicing\SourceDocumentJson.json";
 
 
         $fullSignedFile = file_get_contents($path);
@@ -150,7 +149,7 @@ class InvoiceController extends Controller
             unlink($path2);
             unlink($path3);
             unlink($path4);
-            return redirect()->route('showAllInvoices')->with('success', $invoice['acceptedDocuments'][0]['uuid'] . ' تم تسجيل الفاتورة بنجاح برقم');
+            return redirect()->route('showAllInvoices')->with('success',  ' تم تسجيل الفاتورة بنجاح برقم' . $invoice['acceptedDocuments'][0]['uuid']);
         } else {
             unlink($path);
             unlink($path2);
