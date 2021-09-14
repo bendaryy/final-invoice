@@ -273,10 +273,12 @@
         <tr>
             <th>قيمة ضريبة المنبع %</th>
             <td>
-                <select name="t4rate" id="t4rate" class="form-control form-control-sm">
+                {{-- <select name="t4rate" id="t4rate" class="form-control form-control-sm">
                     <option value=5 selected>5%</option>
                     <option value=0>0%</option>
                 </select>
+                 --}}
+                <input type="number" name="t4rate" id="t4rate">
             </td>
         </tr>
     </table>
