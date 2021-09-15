@@ -49,7 +49,7 @@ class InvoiceController extends Controller
                 "invoiceLines" => array(array(
                     "description" => $request->invoiceDescription,
                     "itemType" => $request->itemType,
-                    "itemCode" => "EG-410973742-100",
+                    "itemCode" => "10007592",
                     "internalCode" => "100",
                     "unitType" => "EA",
                     "quantity" => floatval($request->quantity),
