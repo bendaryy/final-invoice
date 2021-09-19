@@ -239,6 +239,15 @@
                     </div>
                 </div>
 
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label col-form-label-sm"> تاريخ الفاتورة</label>
+                    <div class="col-sm-9">
+                        <input type="date" value="{{ date("Y-m-d") }}" class="form-control form-control-sm text-center"
+                            name="date" placeholder="">
+                    </div>
+                </div>
+
                 <div class="form-group row invoice-note" style="margin-top: 40px;margin-right:100px">
                     <label for="invoice-detail-notes" class="col-sm-12 col-form-label col-form-label-sm text-left">وصف
                         الفاتورة</label>

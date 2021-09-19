@@ -43,7 +43,7 @@ class InvoiceController extends Controller
                 ),
                 "documentType" => "I",
                 "documentTypeVersion" => "1.0",
-                "dateTimeIssued" => date("Y-m-d") . "T" . date("h:i:s") . "Z",
+                "dateTimeIssued" => $request->date . "T" . date("h:i:s") . "Z",
                 "taxpayerActivityCode" => "6920",
                 "internalID" => $request->internalId,
                 "invoiceLines" => array(array(
