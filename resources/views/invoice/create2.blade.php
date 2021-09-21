@@ -231,6 +231,20 @@
                 </div>
 
 
+                <div class="form-group row invoice-created-by">
+                    <label for="payment-method-country" class="col-sm-3 col-form-label col-form-label-sm">نوع الوثيقة
+                    </label>
+                    <div class="col-sm-9">
+                        <select name="DocumentType" class="form-control form-control-sm">
+                            <option value="I" selected>فاتورة</option>
+                            <option value="C">إشعار دائن</option>
+                            <option value="D">إشعار مدين</option>
+
+                        </select>
+                    </div>
+                </div>
+
+
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label col-form-label-sm">الرقم الداخلى للفاتورة</label>
                     <div class="col-sm-9">

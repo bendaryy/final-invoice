@@ -41,7 +41,7 @@ class InvoiceController extends Controller
                     "id" => $request->receiverId,
                     "name" => $request->receiverName
                 ),
-                "documentType" => "I",
+                "documentType" => $request->DocumentType,
                 "documentTypeVersion" => "1.0",
                 "dateTimeIssued" => $request->date . "T" . date("h:i:s") . "Z",
                 "taxpayerActivityCode" => "6920",
@@ -70,7 +70,7 @@ class InvoiceController extends Controller
                         array(
                             "taxType" => "T4",
                             "amount" => floatval($request->t4Amount),
-                            "subType" => "W004",
+                            "subType" => "W010",
                             "rate" => floatval($request->t4rate)
                         ),
                         array(
@@ -312,3 +312,4 @@ class InvoiceController extends Controller
     //     return view('test', compact('tests'));
     // }
 }
+
