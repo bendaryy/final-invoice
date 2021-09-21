@@ -197,8 +197,8 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label col-form-label-sm">عنوان الشركة</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-sm text-center"
-                            name="street" placeholder="عنوان الشركة">
+                        <input type="text" class="form-control form-control-sm text-center" name="street"
+                            placeholder="عنوان الشركة">
                     </div>
                 </div>
 

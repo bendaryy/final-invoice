@@ -248,7 +248,7 @@ class InvoiceController extends Controller
     public function create()
     {
         $allCompanies = Company::all();
-        return view('invoice.create2',compact('allCompanies'));
+        return view('invoice.create2', compact('allCompanies'));
     }
 
     public function cancelDocument($uuid)
@@ -321,4 +321,3 @@ class InvoiceController extends Controller
     //     return view('test', compact('tests'));
     // }
 }
-
