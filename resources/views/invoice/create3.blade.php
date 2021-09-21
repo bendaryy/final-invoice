@@ -10,6 +10,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 <title>الفاتورة الإلكترونية </title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+    integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="icon" type="image/x-icon" href="../assets/img/favicon.ico" />
 <link href="../assets/css/loader.css" rel="stylesheet" type="text/css" />
 <script src="../assets/js/loader.js"></script>
@@ -17,9 +20,6 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../assets/css/plugins.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
-    integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <!-- BEGIN PAGE LEVEL STYLES -->
@@ -32,6 +32,7 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
 <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="../assets/css/plugins.css" rel="stylesheet" type="text/css" />
+
 <!-- END GLOBAL MANDATORY STYLES -->
 
 <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
@@ -40,17 +41,7 @@
 <link rel="stylesheet" type="text/css" href="plugins/table/datatable/dt-global_style.css">
 
 
-<style>
-    .select2-dropdown {
-        background: #0E1726;
-        color: white
-    }
 
-    .select2-selection__rendered {
-        background: #1B2E4B;
-        color: #6C757D !important;
-    }
-</style>
 <script>
     function mult(value) {
             var x,y,z;
@@ -142,28 +133,34 @@
 
 @section('content')
 
+{{--
 <form action="{{route('createInvoice3')}}" method="GET">
-    <div class="form-group row">
-        <div class="col-sm-6" style="text-align: center;margin:auto">
-            <label class="col-sm-3 col-form-label col-form-label-sm">اسم الشركة</label>
+<div class="form-group row">
+    <div class="col-sm-6" style="text-align: center;margin:auto">
+        <label class="col-sm-3 col-form-label col-form-label-sm">اسم الشركة</label>
 
-            <select name="receiverName" class="form-control" id="receiverName">
-                <option selected disabled>اختر اسم الشركة</option>
-                @foreach ($allCompanies as $company)
-                <option value="{{ $company->id }}" class="form-control">{{ $company->name }}</option>
-                @endforeach
-            </select>
-        </div>
+        <select name="receiverName" class="form-control" id="receiverName">
+            <option selected disabled>اختر اسم الشركة</option>
+            @foreach ($allCompanies as $company)
+            <option value="{{ $company->id }}" class="form-control">{{ $company->name }}</option>
+            @endforeach
+        </select>
     </div>
-    <div class="form-group" style="text-align: center">
-        <button type="submit" class="btn btn-success">ملئ بيانات الشركة</button>
-    </div>
-</form>
+</div>
+<div class="form-group" style="text-align: center">
+    <button type="submit" class="btn btn-success">filter</button>
+</div>
+</form> --}}
+<div style="text-align: center">
 
+    <a class="btn btn-primary" href="{{ route('createInvoice') }}" style="text-align: center">الرجوع لاختيار الشركة</a>
+</div>
 
 <form method="POST" action="{{ route('storeInvoice') }}">
     @method("POST")
     @csrf
+
+
 
     <div class="row justify-content-center">
 
@@ -174,22 +171,27 @@
             <h3 style="text-align: center;margin:40px">الفاتورة الى</h3>
 
 
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label col-form-label-sm">اسم الشركة</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control form-control-sm text-center" name="receiverName"
-                        placeholder="اسم الشركة">
-                </div>
-            </div>
+            @foreach ($companies as $item)
+
 
 
 
             <div class="invoice-address-client-fields">
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label col-form-label-sm">أسم الشركة </label>
+                    <div class="col-sm-9">
+                        <input type="text" name="receiverName" class="form-control form-control-sm text-center"
+                            value="{{$item->name}}">
+                    </div>
+                </div>
+
+
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label col-form-label-sm">الرقم الضريبى </label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control form-control-sm text-center" name="receiverId"
-                            placeholder="الرقم الضريبى">
+                        <input type="number" class="form-control form-control-sm text-center"
+                            value="{{$item->BetakaDriba}}" name="receiverId" placeholder="الرقم الضريبى">
                     </div>
                 </div>
 
@@ -216,8 +218,8 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label col-form-label-sm">الشارع</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-sm text-center" name="street"
-                            placeholder="اسم الشارع">
+                        <input type="text" value="{{ $item->AddrCo }}" class="form-control form-control-sm text-center"
+                            name="street" placeholder="اسم الشارع">
                     </div>
                 </div>
 
@@ -300,8 +302,6 @@
                             style="height: 88px;width: 360px;text-align: center"></textarea>
                     </div>
                 </div>
-
-
 
 
 
@@ -427,6 +427,7 @@
 
 
 </form>
+@endforeach
 
 @endsection
 
@@ -438,6 +439,14 @@
 
 @section('js')
 <script src="../assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+    integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $("#receiverName").select2({
+        dir:"rtl"
+    });
+</script>
 <script src="../bootstrap/js/popper.min.js"></script>
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -454,12 +463,7 @@
 <script src="../plugins/dropify/dropify.min.js"></script>
 <script src="../plugins/fullcalendar/flatpickr.js"></script>
 <script src="../assets/js/apps/invoice-add.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
-    integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    $("#receiverName").select2({
-        dir:"rtl"
-    });
-</script>
+
+
+
 @endsection

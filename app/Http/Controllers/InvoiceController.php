@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Invoice;
@@ -246,7 +247,8 @@ class InvoiceController extends Controller
 
     public function create()
     {
-        return view('invoice.create2');
+        $allCompanies = Company::all();
+        return view('invoice.create2',compact('allCompanies'));
     }
 
     public function cancelDocument($uuid)
@@ -299,6 +301,13 @@ class InvoiceController extends Controller
         } else {
             return redirect()->route('showAllInvoices2')->with('error', $cancel['error']['details'][0]['message']);
         }
+    }
+
+    public function create3(Request $request)
+    {
+        $allCompanies = Company::all();
+        $companies = Company::where('id', $request->receiverName)->get();
+        return view('invoice.create3', compact('companies', 'allCompanies'));
     }
 
 

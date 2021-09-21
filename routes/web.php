@@ -27,6 +27,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::post('invoice', [InvoiceController::class, 'invoice'])->name('storeInvoice');
 // Route::post('test','InvoiceController@test1')->name('test1');
 Route::get('invoice/create', [InvoiceController::class, 'create'])->middleware('auth')->name('createInvoice');
+Route::get('invoice/create3', [InvoiceController::class, 'create3'])->middleware('auth')->name('createInvoice3');
+
 
 Route::get('details', [InvoiceController::class, 'getData'])->name('getData');
 Route::get('test', [InvoiceController::class, 'invoice'])->name('test');
