@@ -196,43 +196,13 @@
                 </div>
 
 
-
-
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label col-form-label-sm">المحافظة</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-sm text-center" name="governate"
-                            placeholder="اسم المحافظة">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label col-form-label-sm">المدينة</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-sm text-center" name="regionCity"
-                            placeholder="اسم المدينة">
-                    </div>
-                </div>
-
-
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label col-form-label-sm">الشارع</label>
+                    <label class="col-sm-3 col-form-label col-form-label-sm">عنوان الشركة</label>
                     <div class="col-sm-9">
                         <input type="text" value="{{ $item->AddrCo }}" class="form-control form-control-sm text-center"
-                            name="street" placeholder="اسم الشارع">
+                            name="street" placeholder="عنوان الشركة">
                     </div>
                 </div>
-
-
-
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label col-form-label-sm">رقم المبنى</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-sm text-center" name="buildingNumber"
-                            placeholder="رقم المبنى">
-                    </div>
-                </div>
-
 
 
                 <div class="form-group row invoice-created-by">

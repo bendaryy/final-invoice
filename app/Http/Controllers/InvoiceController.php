@@ -33,10 +33,10 @@ class InvoiceController extends Controller
                 "receiver" => array(
                     "address" => array(
                         "country" => "EG",
-                        "governate" => $request->governate,
-                        "regionCity" => $request->regionCity,
+                        "governate" => "-",
+                        "regionCity" => "-",
                         "street" => $request->street,
-                        "buildingNumber" => $request->buildingNumber
+                        "buildingNumber" => "-"
                     ),
                     "type" => $request->receiverType,
                     "id" => $request->receiverId,
