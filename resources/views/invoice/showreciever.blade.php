@@ -97,6 +97,7 @@
             <th>اسم الشركة</th>
             <th>الإجمالى</th>
             <th>حالة الفاتورة</th>
+              {{-- <th>الرقم الداخلى</th> --}}
             <th>عرض الفاتورة</th>
             <th>تحميل الفاتورة </th>
             <th>رفض الفاتورة</th>
@@ -117,6 +118,7 @@
             @else
             <td>{{ $invoice['status'] }}</td>
             @endif
+             {{-- <td>{{ $invoice['internalId'] }}</td> --}}
             <td><a href="{{ $invoice['publicUrl'] }}" class="btn btn-success">عرض الفاتورة على موقع الضرائب</a></td>
             <td><a href="{{ route('pdf',$invoice['uuid']) }}" class="btn btn-info"> pdf تحميل الفاتورة </a></td>
             <td>
