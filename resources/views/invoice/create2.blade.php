@@ -177,7 +177,7 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label col-form-label-sm">اسم الشركة</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control form-control-sm text-center" name="receiverName"
+                    <input type="text" class="text-center form-control form-control-sm" name="receiverName"
                         placeholder="اسم الشركة">
                 </div>
             </div>
@@ -188,7 +188,7 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label col-form-label-sm">الرقم الضريبى </label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control form-control-sm text-center" name="receiverId"
+                        <input type="number" class="text-center form-control form-control-sm" name="receiverId"
                             placeholder="الرقم الضريبى">
                     </div>
                 </div>
@@ -197,7 +197,7 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label col-form-label-sm">عنوان الشركة</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-sm text-center" name="street"
+                        <input type="text" class="text-center form-control form-control-sm" name="street"
                             placeholder="عنوان الشركة">
                     </div>
                 </div>
@@ -219,7 +219,7 @@
 
 
 
-                <div class="form-group row invoice-created-by">
+                {{-- <div class="form-group row invoice-created-by">
                     <label for="payment-method-country" class="col-sm-3 col-form-label col-form-label-sm">نوع العنصر
                     </label>
                     <div class="col-sm-9">
@@ -229,7 +229,7 @@
 
                         </select>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group row invoice-created-by">
                     <label for="payment-method-country" class="col-sm-3 col-form-label col-form-label-sm">نوع الوثيقة
@@ -248,7 +248,7 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label col-form-label-sm">الرقم الداخلى للفاتورة</label>
                     <div class="col-sm-9">
-                        <input type="number" class="form-control form-control-sm text-center" name="internalId"
+                        <input type="number" class="text-center form-control form-control-sm" name="internalId"
                             placeholder="الرقم الداخلى للفاتورة">
                     </div>
                 </div>
@@ -257,13 +257,13 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label col-form-label-sm"> تاريخ الفاتورة</label>
                     <div class="col-sm-9">
-                        <input type="date" value="{{ date("Y-m-d") }}" class="form-control form-control-sm text-center"
+                        <input type="date" value="{{ date("Y-m-d") }}" class="text-center form-control form-control-sm"
                             name="date" placeholder="">
                     </div>
                 </div>
 
                 <div class="form-group row invoice-note" style="margin-top: 40px;margin-right:100px">
-                    <label for="invoice-detail-notes" class="col-sm-12 col-form-label col-form-label-sm text-left">وصف
+                    <label for="invoice-detail-notes" class="text-left col-sm-12 col-form-label col-form-label-sm">وصف
                         الفاتورة</label>
                     <div class="col-sm-12">
                         <textarea class="form-control" name="invoiceDescription" placeholder='وصف تفصيلى لصرف الفاتورة'

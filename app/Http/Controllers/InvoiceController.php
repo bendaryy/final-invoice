@@ -49,8 +49,8 @@ class InvoiceController extends Controller
                 "internalID" => $request->internalId,
                 "invoiceLines" => array(array(
                     "description" => $request->invoiceDescription,
-                    "itemType" => $request->itemType,
-                    "itemCode" => "10007592",
+                    "itemType" => "EGS",
+                    "itemCode" => "EG-410973742-100",
                     "internalCode" => "100",
                     "unitType" => "EA",
                     "quantity" => floatval($request->quantity),
