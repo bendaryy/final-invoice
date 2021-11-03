@@ -42,7 +42,7 @@ class InvoiceController extends Controller
                 "name" => $request->receiverName,
             ),
             "documentType" => $request->DocumentType,
-            "documentTypeVersion" => "0.9",
+            "documentTypeVersion" => "1.0",
             "dateTimeIssued" => $request->date . "T" . date("h:i:s") . "Z",
             "taxpayerActivityCode" => "6920",
             "internalID" => $request->internalId,
