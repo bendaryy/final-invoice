@@ -4,6 +4,9 @@
 @endsection
 @section('page')
 انشاء فاتورة جديدة
+
+
+
 @endsection
 @section('head')
 <meta charset="utf-8">
@@ -42,72 +45,13 @@
 
 
 
-<script>
-    function mult(value) {
-            var x,y,z;
-         var quantity  = document.getElementById('quantity').value;
-         x = value * quantity;
-             document.getElementById('salesTotal').value = x;
-        }
-        function mult2(value){
-            var x,y,z;
-        var amounEGP = document.getElementById('amountEGP').value;
-        y = value * amounEGP;
-            document.getElementById('salesTotal').value = y
-        }
-        function discount(value){
-            var salesTotal,netTotal,z,t2valueEnd,t1Value,rate,t4rate,t4Amount;
-            salesTotal = document.getElementById('salesTotal').value;
-            netTotal = salesTotal - value;
-
-           netTotalEnd =  document.getElementById('netTotal').value = netTotal;
-            rate = document.getElementById('rate').value;
-            t4rate = document.getElementById('t4rate').value;
-            t2valueEnd =  document.getElementById('t2').value = netTotalEnd * rate/100;
-            t4Amount = document.getElementById('t4Amount').value = netTotal * t4rate/100;
-            // t1Value = parseFloat(netTotalEnd) + parseFloat(t2valueEnd);
-            // document.getElementById('t1').value = t1Value * 0.14;
-        }
-        // function nettotal(value){
-        //     var t2amount;
-        //     t2amount = value * 10/100;
-        //     document.getElementById('t2').value = t2amount;
-        // }
-
-        // function t2value(value){
-        //     var x,netTotal,t1,t2;
-        //     netTotal = document.getElementById('netTotal').value;
-        //     t1Amount =  parseFloat(netTotal) + parseFloat(value);
-        //     document.getElementById('t1').value = t1Amount * 0.14;
-        // }
-        function itemsDiscountValue(value){
-            var x,netTotal,t1amount,t2amount,t4Amount;
-            netTotal = document.getElementById('netTotal').value;
-            // t1amount = document.getElementById('t1').value;
-            t2amount =  document.getElementById('t2').value;
-            t4Amount = document.getElementById('t4Amount').value;
-            // x = parseFloat(netTotal) + parseFloat(t1amount) + parseFloat(t2amount) - parseFloat(value);  this is an old value of x with t1
-            x = parseFloat(netTotal) +parseFloat(t2amount) - parseFloat(t4Amount) - parseFloat(value);
-            document.getElementById("totalItemsDiscount").value = x;
-
-        }
-        function Extradiscount(value){
-            var totalDiscount,x;
-            totalDiscount = document.getElementById("totalItemsDiscount").value;
-            x = totalDiscount - value;
-            document.getElementById('totalAmount').value = x;
-        }
-
-
-
-
-
-</script>
+{{-- <script src="{{ asset('assets/js/invoice.js') }}"></script> --}}
 
 <style>
     th,
     td {
-        padding: 15px
+        padding: 5px;
+        text-align: center;
     }
 
     .borderNone {
@@ -125,6 +69,15 @@
     .navbar-expand-sm {
         justify-content: center
     }
+
+    input[type="number"] {
+        width: 150;
+        text-align: center
+    }
+
+    hr {
+        border: 4px solid white;
+    }
 </style>
 @endsection
 
@@ -133,24 +86,28 @@
 
 @section('content')
 
-{{--
-<form action="{{route('createInvoice3')}}" method="GET">
-<div class="form-group row">
-    <div class="col-sm-6" style="text-align: center;margin:auto">
-        <label class="col-sm-3 col-form-label col-form-label-sm">اسم الشركة</label>
+{{-- <form action="{{route('createInvoice3')}}" method="GET">
+    <div class="form-group row">
+        <div class="col-sm-6" style="text-align: center;margin:auto">
+            <label class="col-sm-3 col-form-label col-form-label-sm">اسم الشركة</label>
 
-        <select name="receiverName" class="form-control" id="receiverName">
-            <option selected disabled>اختر اسم الشركة</option>
-            @foreach ($allCompanies as $company)
-            <option value="{{ $company->id }}" class="form-control">{{ $company->name }}</option>
-            @endforeach
-        </select>
+            <select name="receiverName" class="form-control" id="receiverName">
+                <option selected disabled>اختر اسم الشركة</option>
+                @foreach ($allCompanies as $company)
+                <option value="{{ $company->id }}" class="form-control">{{ $company->name }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
-</div>
-<div class="form-group" style="text-align: center">
-    <button type="submit" class="btn btn-success">filter</button>
-</div>
+    <div class="form-group" style="text-align: center">
+        <button type="submit" class="btn btn-success">filter</button>
+    </div>
 </form> --}}
+<div style="position: fixed;z-index:100;">
+
+    <button type="button" class="rounded-sm btn btn-info" id="addNewOne">اضافة</button>
+
+</div>
 <div style="text-align: center">
 
     <a class="btn btn-primary" href="{{ route('createInvoice') }}" style="text-align: center">الرجوع لاختيار الشركة</a>
@@ -182,7 +139,7 @@
                     <label class="col-sm-3 col-form-label col-form-label-sm">أسم الشركة </label>
                     <div class="col-sm-9">
                         <input type="text" name="receiverName" class="text-center form-control form-control-sm"
-                            value="{{$item->name}}">
+                            value="{{ $item->name }}">
                     </div>
                 </div>
 
@@ -191,7 +148,7 @@
                     <label class="col-sm-3 col-form-label col-form-label-sm">الرقم الضريبى </label>
                     <div class="col-sm-9">
                         <input type="number" class="text-center form-control form-control-sm"
-                            value="{{$item->BetakaDriba}}" name="receiverId" placeholder="الرقم الضريبى">
+                            value="{{ $item->BetakaDriba }}" name="receiverId" placeholder="الرقم الضريبى">
                     </div>
                 </div>
 
@@ -221,19 +178,21 @@
 
 
 
-                {{-- <div class="form-group row invoice-created-by">
+                <div class="form-group row invoice-created-by">
                     <label for="payment-method-country" class="col-sm-3 col-form-label col-form-label-sm">نوع العنصر
                     </label>
                     <div class="col-sm-9">
                         <select name="itemType" class="form-control form-control-sm">
                             <option value="EGS">EGS</option>
                             <option value="GS1">GS1</option>
+
                         </select>
                     </div>
-                </div> --}}
+                </div>
 
                 <div class="form-group row invoice-created-by">
-                    <label for="payment-method-country" class="col-sm-3 col-form-label col-form-label-sm">نوع الوثيقة
+                    <label for="payment-method-country" class="col-sm-3 col-form-label col-form-label-sm">نوع
+                        الوثيقة
                     </label>
                     <div class="col-sm-9">
                         <select name="DocumentType" class="form-control form-control-sm">
@@ -258,22 +217,10 @@
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label col-form-label-sm"> تاريخ الفاتورة</label>
                     <div class="col-sm-9">
-                        <input type="date" value="{{ date("Y-m-d") }}" class="text-center form-control form-control-sm"
+                        <input type="date" value="{{ date('Y-m-d') }}" class="text-center form-control form-control-sm"
                             name="date" placeholder="">
                     </div>
                 </div>
-
-                <div class="form-group row invoice-note" style="margin-top: 40px;margin-right:100px">
-                    <label for="invoice-detail-notes" class="text-left col-sm-12 col-form-label col-form-label-sm">وصف
-                        الفاتورة</label>
-                    <div class="col-sm-12">
-                        <textarea class="form-control" name="invoiceDescription" placeholder='وصف تفصيلى لصرف الفاتورة'
-                            style="height: 88px;width: 360px;text-align: center"></textarea>
-                    </div>
-                </div>
-
-
-
             </div>
 
         </div>
@@ -282,124 +229,145 @@
     </div>
     <hr style="border: 1px solid white;margin:50px 20px">
 
-    <table style="margin: auto">
-        <tr>
-            <th>قيمة الضريبة (النسبية) %</th>
-
-            <td>
-                <select name="rate" id="rate" class="form-control form-control-sm">
-                    <option value=10 selected>10%</option>
-                    <option value=0>0%</option>
-
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th>قيمة ضريبة المنبع %</th>
-            <td>
-                {{-- <select name="t4rate" id="t4rate" class="form-control form-control-sm">
-                    <option value=5 selected>5%</option>
-                    <option value=0>0%</option>
-                </select> --}}
-
-                <input type="number" name="t4rate" id="t4rate">
-            </td>
-        </tr>
-    </table>
+    <div id="newOne">
 
 
 
-
-
-    <div class="container-fluid" style="text-align: center;margin: auto">
-
-
-
-        <div class="row">
-            <div class="col">
-                <table border="1" style="text-align: center;margin:auto">
-                    <tr>
-                        <th>الكمـــية</th>
-                        <td><input type=number step="any" name="quantity" id="quantity" onkeyup="mult2(this.value)"
-                                onmouseover="mult2(this.value)"></td>
-                    </tr>
-                    <tr>
-                        <th>المبلغ بالجنيه المصرى</th>
-                        <td><input type=number step="any" name="amountEGP" id="amountEGP" onkeyup="mult(this.value);"
-                                onmouseover="mult(this.value);"></td>
-                    </tr>
-                    <tr>
-                        <th>إجمالي المبيعات</th>
-                        <td><input type=number step="any" name="salesTotal" readonly id="salesTotal"></td>
-                    </tr>
-                    <tr>
-                        <th>الخصـــم</th>
-                        <td><input type="number" step="any" name="discountAmount" id="discountAmount"
-                                onkeyup="discount(this.value)" onmouseover="discount(this.value)"></td>
-                    </tr>
-                    <tr>
-                        <th>الإجمالى الصافى</th>
-                        <td><input type="number" step="any" readonly name="netTotal" id="netTotal"
-                                onkeyup="nettotal(this.value)" onmouseover="nettotal(this.value)"></td>
-                    </tr>
-
-                    <tr>
-
-                        <th>قيمة الضريبة (النسبية) </th>
-                        <td> <input type="number" step="any" name="t2Amount" readonly id="t2"
-                                {{-- onkeyup="t2value(this.value)" onmouseover="t2value(this.value)" --}}>
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <th> قيمة ضريبة (المنبع) </th>
-                        <td> <input type="number" step="any" name="t4Amount" readonly id="t4Amount">
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <th>خصــم الأصنــاف</th>
-                        <td><input type="number" step="any" name="itemsDiscount" id="itemsDiscount"
-                                onkeyup="itemsDiscountValue(this.value)" onmouseover="itemsDiscountValue(this.value)">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>إجمالي خصم الأصناف</th>
-                        <td><input type="number" step="any" name="totalItemsDiscount" readonly id="totalItemsDiscount">
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th>خصم اضافي</th>
-                        <td><input type="number" step="any" name="ExtraDiscount" id="ExtraDiscount"
-                                onkeyup="Extradiscount(this.value)" onmouseover="Extradiscount(this.value)"></td>
-                    </tr>
-                    <th>المبلغ الإجمالي</th>
-                    <td><input type="number" step="any" name="totalAmount" readonly id="totalAmount"></td>
-                    </tr>
-
-                    {{-- <td> <input type="number" step="any" name="t1Amount" readonly id="t1"></td> --}}
-
-
-                </table>
+        <div class="form-group row invoice-note" style="margin-top: 40px;">
+            <label for="invoice-detail-notes" class="text-center col-sm-12 col-form-label col-form-label-sm"
+                style="text-align: center">وصف
+                الفاتورة</label>
+            <div class="col-sm-12">
+                <textarea class="form-control" name="invoiceDescription[]" placeholder="وصف تفصيلى لصرف الفاتورة"
+                    style="height: 88px;width: 360px;text-align: center;margin:auto"></textarea>
             </div>
         </div>
+
+
+
+        <table style="margin: auto" border="1">
+
+            <tr>
+
+                <th>قيمة الضريبة (النسبية) %</th>
+                <th>قيمة ضريبة المنبع %</th>
+                <th>الكمـــية</th>
+                <th>المبلغ بالجنيه المصرى</th>
+                <th>الخصـــم</th>
+                <th>خصــم الأصنــاف</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="rate[]" id="rate" class="form-control form-control-sm" onkeyup="findTotalt2Amount()"
+                        onmouseover="findTotalt2Amount()">
+                        <option value=10 selected>10%</option>
+                        <option value=0>0%</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="number" width="1px" name="t4rate[]" id="t4rate" onkeyup="findTotalt4Amount()"
+                        onmouseover="findTotalt4Amount()">
+                </td>
+                <td><input type="number" step="any" name="quantity[]" id="quantity"
+                        onkeyup="proccess(this.value),findTotalSalesAmount();"
+                        onmouseover="proccess(this.value),findTotalSalesAmount();"></td>
+                <td><input type=number step="any" name="amountEGP[]" id="amountEGP"
+                        onkeyup="operation(this.value),findTotalSalesAmount();;"
+                        onmouseover="operation(this.value),findTotalSalesAmount();;"></td>
+                <td><input type="number" step="any" name="discountAmount[]" id="discountAmount"
+                        onkeyup="discount(this.value),findTotalDiscountAmount(),findTotalNetAmount(),findTotalt4Amount(),findTotalt2Amount()"
+                        onmouseover="discount(this.value),findTotalDiscountAmount(),findTotalNetAmount(),findTotalt4Amount(),findTotalt2Amount()">
+                </td>
+                <td><input type="number" step="any" name="itemsDiscount[]" id="itemsDiscount"
+                        onkeyup="itemsDiscountValue(this.value),findTotalAmount(),findTotalItemsDiscountAmount()"
+                        onmouseover="itemsDiscountValue(this.value),findTotalAmount(),findTotalItemsDiscountAmount()">
+                </td>
+
+            </tr>
+            <tr>
+                <th>قيمة الضريبة (النسبية) </th>
+                <th> قيمة ضريبة (المنبع) </th>
+                <th>إجمالي المبيعات</th>
+                <th>الإجمالى الصافى</th>
+                <th colspan="2">الإجمالى</th>
+            </tr>
+            <tr>
+                <td> <input type="number" step="any" name="t2Amount[]" readonly id="t2" onkeyup="findTotalt2Amount()"
+                        onmouseover="findTotalt2Amount()">
+                </td>
+                <td> <input type="number" step="any" name="t4Amount[]" readonly id="t4Amount"
+                        onkeyup="findTotalt4Amount()" onmouseover="findTotalt4Amount()">
+
+                </td>
+                <td><input type=number step="any" name="salesTotal[]" readonly id="salesTotal"></td>
+                <td><input type="number" step="any" readonly name="netTotal[]" id="netTotal"
+                        onkeyup="nettotal(this.value),findTotalNetAmount()"
+                        onmouseover="nettotal(this.value),findTotalNetAmount()"></td>
+                <td colspan="2"><input type="number" step="any" name="totalItemsDiscount[]" readonly
+                        id="totalItemsDiscount" onkeyup="findTotalAmount()" onmouseover="findTotalAmount()">
+            </tr>
+
+        </table>
+        <hr>
     </div>
+    <br style="margin-bottom: 50px">
+    <table border="1" style="margin:auto;margin-top: 20px">
+        <tr>
+            <th style="margin-top: 30px">إجمالى ضريبة المنبع</th>
+            <th style="margin-top: 30px">إجمالى الضريبة النسبية</th>
+            <th style="margin-top: 30px">إجمالى مبلغ الخصم</th>
+            <th style="margin-top: 30px">إجمالى مبلغ المبيعات</th>
+            <th style="margin-top: 30px">إجمالى المبلغ الصافى</th>
+            <th style="margin-top: 30px">إجمالى خصم الأصناف</th>
+        </tr>
 
 
+        <tr>
+            <td><input type="number" step="any" name="totalt4Amount" onmouseover="findTotalt4Amount()"
+                    onkeyup="findTotalt4Amount()" readonly id="totalt4Amount"></td>
+            <td><input type="number" step="any" name="totalt2Amount" onmouseover="findTotalt2Amount()"
+                    onkeyup="findTotalt2Amount()" readonly id="totalt2Amount"></td>
+            <td><input type="number" step="any" name="totalDiscountAmount" onmouseover="findTotalDiscountAmount()"
+                    onkeyup="findTotalDiscountAmount()" readonly id="totalDiscountAmount"></td>
+            <td><input type="number" step="any" name="TotalSalesAmount" onmouseover="findTotalSalesAmount()"
+                    onkeyup="findTotalSalesAmount()" readonly id="TotalSalesAmount"></td>
+            <td><input type="number" step="any" name="TotalNetAmount" onmouseover="findTotalNetAmount()"
+                    onkeyup="findTotalNetAmount()" readonly id="TotalNetAmount"></td>
+            <td><input type="number" step="any" name="totalItemsDiscountAmount"
+                    onmouseover="findTotalItemsDiscountAmount()" onkeyup="findTotalItemsDiscountAmount()" readonly
+                    id="totalItemsDiscountAmount"></td>
+        </tr>
+        <tr>
+            <th>خصم اضافي</th>
+            <th colspan="2"> المبلغ الإجمالى قبل الخصم </th>
+            <th colspan="3" style="direction: rtl">(المدفوع) المبلغ الإجمالى بعد الخصم </th>
+        </tr>
+
+        <tr>
+            <td><input type="number" step="any" name="ExtraDiscount" id="ExtraDiscount"
+                    onkeyup="Extradiscount(this.value),findTotalAmount()"
+                    onmouseover="Extradiscount(this.value),findTotalAmount()"></td>
+            </td>
+            <td colspan="2"><input width="40" type="number" step="any" name="totalAmount" readonly id="totalAmount">
+            </td>
+
+            <td colspan="3"><input width="40" style="color: red;font-weight: bold;font-size: 20px" type="number"
+                    step="any" name="totalAmount2" readonly id="totalAmount2">
+
+
+            </td>
+
+        </tr>
+    </table>
+    </tr>
 
     <div style="text-align: center;margin:50px auto">
         <button type="submit" class="btn btn-success" style="font-size: 30px">إرسال الفاتـــورة</button>
     </div>
-
-
 </form>
 @endforeach
 
 @endsection
-
 
 
 
@@ -413,8 +381,9 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $("#receiverName").select2({
-        dir:"rtl"
+        dir: "rtl"
     });
+
 </script>
 <script src="../bootstrap/js/popper.min.js"></script>
 <script src="../bootstrap/js/bootstrap.min.js"></script>
@@ -423,8 +392,9 @@
 
 <script>
     $(document).ready(function() {
-            App.init();
-        });
+        App.init();
+    });
+
 </script>
 <script src="../assets/js/custom.js"></script>
 <!-- END GLOBAL MANDATORY SCRIPTS -->
@@ -432,7 +402,229 @@
 <script src="../plugins/dropify/dropify.min.js"></script>
 <script src="../plugins/fullcalendar/flatpickr.js"></script>
 <script src="../assets/js/apps/invoice-add.js"></script>
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+
+<script>
+    $(document).ready(function() {
+        let i = 1
+        $("#addNewOne").click(function() {
+            i++;
+            $('#newOne').append(
+                `<div id="row${i}">
+                    <button type="button" name="remove" id="${i}"  class="btn btn-danger btn_remove">x</button>
+                    <div class="form-group row invoice-note" style="margin-top: 40px;">
+                        <label for="invoice-detail-notes" class="text-center col-sm-12 col-form-label col-form-label-sm" style="text-align: center">وصف
+                            الفاتورة</label>
+                        <div class="col-sm-12">
+                            <textarea class="form-control" name="invoiceDescription[]" placeholder="وصف تفصيلى لصرف الفاتورة" style="height: 88px;width: 360px;text-align: center;margin:auto"></textarea>
+                        </div>
+                    </div>
+
+                    <table style="margin: auto" border="1">
+                        <tr>
+                            <th>قيمة الضريبة (النسبية) %</th>
+                            <th>قيمة ضريبة المنبع %</th>
+                            <th>الكمـــية</th>
+                            <th>المبلغ بالجنيه المصرى</th>
+                            <th>الخصـــم</th>
+                            <th>خصــم الأصنــاف</th>
+
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <select name="rate[]" id="rate${i}" class="form-control form-control-sm">
+                                    <option value=10 selected>10%</option>
+                                    <option value=0>0%</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" width="1px" name="t4rate[]" id="t4rate${i}">
+
+                            </td>
+                            <td><input type="number" step="any" name="quantity[]" id="quantity${i}" onkeyup="proccess${i}(this.value),findTotalSalesAmount()" onmouseover="proccess${i}(this.value),findTotalSalesAmount()"></td>
+                            <td><input type=number step="any" name="amountEGP[]" id="amountEGP${i}" onkeyup="operation${i}(this.value),findTotalSalesAmount();" onmouseover="operation${i}(this.value),findTotalSalesAmount();"></td>
+                            <td><input type="number" step="any" name="discountAmount[]" id="discountAmount${i}" onkeyup="discount${i}(this.value),findTotalDiscountAmount(),findTotalNetAmount(),findTotalt4Amount(),findTotalt2Amount()" onmouseover="discount${i}(this.value),findTotalDiscountAmount(),findTotalNetAmount(),findTotalt4Amount(),findTotalt2Amount()"></td>
+
+                            <td><input type="number" step="any" name="itemsDiscount[]" id="itemsDiscount${i}" onkeyup="itemsDiscountValue${i}(this.value),findTotalAmount(),findTotalItemsDiscountAmount()" onmouseover="itemsDiscountValue${i}(this.value),findTotalAmount(),findTotalItemsDiscountAmount()">
+                        </tr>
+                        <tr>
+                            <th>قيمة الضريبة (النسبية) </th>
+                            <th> قيمة ضريبة (المنبع) </th>
+                            <th>إجمالي المبيعات</th>
+                            <th>الإجمالى الصافى</th>
+                            <th colspan="2"> الإجمالي</th>
+                        </tr>
+                        <tr>
+                            <td> <input type="number" step="any" name="t2Amount[]" readonly id="t2${i}" {{--
+                        onkeyup="t2value(this.value)" onmouseover="t2value(this.value)" --}}>
+                            </td>
+                            <td> <input type="number" step="any" name="t4Amount[]" readonly id="t4Amount${i}">
+                            </td>
+                            <td><input type=number step="any" name="salesTotal[]" readonly id="salesTotal${i}"></td>
+                            <td><input type="number" step="any" readonly name="netTotal[]" id="netTotal${i}" onkeyup="nettotal${i}(this.value),findTotalNetAmount()" onmouseover="nettotal${i}(this.value),findTotalNetAmount()"></td>
+                            <td colspan="2"><input type="number" step="any" name="totalItemsDiscount[]" readonly id="totalItemsDiscount${i}">
+                        </tr>
+                    </table>
+
+
+                <hr>
+                </div> `
+
+
+            )
+
+
+            $('<script> function operation' + i + '(value) {var x, y, z;  var quantity = document.getElementById("quantity' + i + '").value; x = value * quantity; document.getElementById("salesTotal' + i + '").value = x;};  function proccess' + i + '(value) {var x, y, z;  var amounEGP = document.getElementById("amountEGP' + i + '").value; y = value * amounEGP; document.getElementById("salesTotal' + i + '").value = y;};function discount' + i + '(value) {var salesTotal, netTotal, z, t2valueEnd, t1Value, rate, t4rate, t4Amount; salesTotal = document.getElementById("salesTotal' + i + '").value; netTotal = salesTotal - value; netTotalEnd = document.getElementById("netTotal' + i + '").value = netTotal; rate = document.getElementById("rate' + i + '").value; t4rate = document.getElementById("t4rate' + i + '").value;  t2valueEnd = document.getElementById("t2' + i + '").value = (netTotalEnd * rate) / 100; t4Amount = document.getElementById("t4Amount' + i + '").value = (netTotal * t4rate) / 100;}; function itemsDiscountValue' + i + '(value) {var x, netTotal, t1amount, t2amount, t4Amount;netTotal = document.getElementById("netTotal' + i + '").value;t2amount = document.getElementById("t2' + i + '").value;t4Amount = document.getElementById("t4Amount' + i + '").value;x = parseFloat(netTotal) + parseFloat(t2amount) - parseFloat(t4Amount) - parseFloat(value);document.getElementById("totalItemsDiscount' + i + '").value = x;};  </' + 'script>').appendTo('#test123');
+            $(document).on('click', '.btn_remove', function() {
+                var button_id = $(this).attr("id");
+                $("#row" + button_id + "").remove()
+                findTotalDiscountAmount();
+                findTotalSalesAmount();
+                findTotalNetAmount();
+                findTotalt4Amount();
+                findTotalt2Amount();
+                findTotalAmount();
+                findTotalItemsDiscountAmount();
+            })
+        });
+    });
+
+</script>
 
 
 
 @endsection
+
+
+<script id="test123">
+    // this is invoice 1
+
+    function operation(value) {
+        var x, y, z;
+
+        var quantity = document.getElementById("quantity").value;
+        x = value * quantity;
+        document.getElementById("salesTotal").value = x;
+    };
+
+    function proccess(value) {
+        var x, y, z;
+        var amounEGP = document.getElementById("amountEGP").value;
+        y = value * amounEGP;
+        document.getElementById("salesTotal").value = y;
+    };
+
+    function discount(value) {
+        var salesTotal, netTotal, z, t2valueEnd, t1Value, rate, t4rate, t4Amount;
+        salesTotal = document.getElementById("salesTotal").value;
+        netTotal = salesTotal - value;
+
+        netTotalEnd = document.getElementById("netTotal").value = netTotal;
+        rate = document.getElementById("rate").value;
+        t4rate = document.getElementById("t4rate").value;
+        t2valueEnd = document.getElementById("t2").value =
+            (netTotalEnd * rate) / 100;
+        t4Amount = document.getElementById("t4Amount").value =
+            (netTotal * t4rate) / 100;
+    }
+
+    function itemsDiscountValue(value) {
+        var x, netTotal, t1amount, t2amount, t4Amount;
+        netTotal = document.getElementById("netTotal").value;
+        t2amount = document.getElementById("t2").value;
+        t4Amount = document.getElementById("t4Amount").value;
+        x =
+            parseFloat(netTotal) +
+            parseFloat(t2amount) -
+            parseFloat(t4Amount) -
+            parseFloat(value);
+        document.getElementById("totalItemsDiscount").value = x;
+    }
+
+    function Extradiscount(value) {
+        var totalDiscount, x;
+        totalDiscount = document.getElementById("totalAmount").value;
+        x = totalDiscount - value;
+        document.getElementById("totalAmount2").value = x;
+    }
+
+    function findTotalDiscountAmount() {
+        var arr = document.getElementsByName("discountAmount[]");
+        var tot = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (parseFloat(arr[i].value)) {
+                tot += parseFloat(arr[i].value);
+            }
+        }
+        document.getElementById("totalDiscountAmount").value = tot;
+
+    }
+
+    function findTotalSalesAmount() {
+        var arr = document.getElementsByName("salesTotal[]");
+        var tot = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (parseFloat(arr[i].value)) {
+                tot += parseFloat(arr[i].value);
+            }
+        }
+        document.getElementById("TotalSalesAmount").value = tot;
+
+    }
+
+    function findTotalNetAmount() {
+        var arr = document.getElementsByName("netTotal[]");
+        var tot = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (parseFloat(arr[i].value)) {
+                tot += parseFloat(arr[i].value);
+            }
+        }
+        document.getElementById("TotalNetAmount").value = tot;
+
+    }
+
+    function findTotalt4Amount() {
+        var arr = document.getElementsByName("t4Amount[]");
+        var tot = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (parseFloat(arr[i].value)) {
+                tot += parseFloat(arr[i].value);
+            }
+        }
+        document.getElementById("totalt4Amount").value = tot;
+    }
+
+    function findTotalt2Amount() {
+        var arr = document.getElementsByName("t2Amount[]");
+        var tot = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (parseFloat(arr[i].value)) {
+                tot += parseFloat(arr[i].value);
+            }
+        }
+        document.getElementById("totalt2Amount").value = tot;
+    }
+    function findTotalAmount() {
+        var arr = document.getElementsByName("totalItemsDiscount[]");
+        var tot = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (parseFloat(arr[i].value)) {
+                tot += parseFloat(arr[i].value);
+            }
+        }
+        document.getElementById("totalAmount").value = tot;
+    }
+    function findTotalItemsDiscountAmount() {
+        var arr = document.getElementsByName("itemsDiscount[]");
+        var tot = 0;
+        for (var i = 0; i < arr.length; i++) {
+            if (parseFloat(arr[i].value)) {
+                tot += parseFloat(arr[i].value);
+            }
+        }
+        document.getElementById("totalItemsDiscountAmount").value = tot;
+    }
+
+</script>
